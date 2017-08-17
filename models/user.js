@@ -2,7 +2,7 @@
  * Created by mykola on 8/17/17.
  */
 const mongoose = require('mongoose');
-mongoose.Promise
+mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
     email: {

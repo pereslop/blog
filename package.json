@@ -1,0 +1,23 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Mykola Kaban",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pereslop/blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pereslop/blog/issues"
+  },
+  "homepage": "https://github.com/pereslop/blog#readme",
+  "description": ""
+}

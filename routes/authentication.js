@@ -21,11 +21,21 @@ module.exports = (router) => {
                });
                user.save((err) => {
                    if (err) {
-                       res.json({ succes:false, message: 'Could not save user, Error: ' + err});
+                       if (err.code === 11000) {
+                           res.json({ success: false, message: 'Username already exists'});
+                       } else {
+                            if (err.errors) {
+                                if (err.errors.email) {
+                                    res.json({success: false, message: err.errors.email.message});
+                                }
+                            } else {
+                                res.json({ succes:false, message: 'Could not save user, Error: ' + err});
+                            }
+                       }
                    } else {
-                       res.json({ succes: true, message: 'User saved'})
+                       res.json({ succes: true, message: 'User saved'});
                    }
-               })
+               });
            }
         }
     }

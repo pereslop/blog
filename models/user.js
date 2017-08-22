@@ -25,6 +25,49 @@ let validEmailChecher = (email) => {
         const regExp = require('regex-email');
         return regExp.test(email);
     }
+};
+
+let usernameLengthChecker = (username) => {
+    if (!username) {
+        return false;
+    } else {
+        if (username.length < 3 || username.length > 15) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+};
+
+let validUsername = (usermane) => {
+    if (!username) {
+        return false;
+    } else {
+
+        const regExp = require('regex-username');
+        return regExp.test(username);
+    }
+}
+
+let passwordLengthChecker = (password) => {
+    if (!password) {
+        return false;
+    } else {
+        if (password.length < 8 || password.length > 35) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+};
+
+let validPassword = (password) => {
+  if (!password) {
+    return false;
+  } else {
+    const regExp = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
+    return regExp.test();
+  }
 }
 const emailValidators = [
     {
@@ -35,6 +78,28 @@ const emailValidators = [
         validator: validEmailChecher,
         message: 'Must be a valid email'
     }
+];
+const usernameValidators = [
+    {
+        validator: usernameLengthChecker,
+        message: 'Username must be at least 3 characters, but no more then 15'
+    },
+    {
+        validator: validUsername,
+        message: 'Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen'
+    }
+];
+
+const  passwordValidators = [
+  {
+    validator: passwordLengthChecker,
+    message: 'password must be at least 8 characters, but not more than 35'
+  },
+  {
+    validator: validPassword,
+    message: 'Must be at least one uppecase, lowercase, spesial character, and number'
+
+  }
 ];
 const userSchema = new Schema({
     email: {
@@ -48,11 +113,13 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        lowercase: true
+        lowercase: true,
+        validate: usernameValidators
     },
     password: {
         type: String,
-        required: true
+        required: true,
+      validate: passwordValidators
     }
 });
 
@@ -62,10 +129,10 @@ userSchema.pre('save', function(next) {
 
     bcrypt.hash(this.password, null, null, (err, hash) => {
         if (err) return next(err); // Ensure no errors
-    this.password = hash; // Apply encryption to password
-    next(); // Exit middleware
+        this.password = hash; // Apply encryption to password
+        next(); // Exit middleware
+    });
 });
-})
 userSchema.methods.comparePassword = (password) => {
     return bcrypt.compareSync(password, this.password);
 };

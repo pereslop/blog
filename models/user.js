@@ -39,13 +39,12 @@ let usernameLengthChecker = (username) => {
     }
 };
 
-let validUsername = (usermane) => {
+let validUsername = (username) => {
     if (!username) {
         return false;
     } else {
-
-        const regExp = require('regex-username');
-        return regExp.test(username);
+      const regExp = new RegExp(/^[a-zA-Z0-9]+$/);
+      return regExp.test(username);
     }
 }
 
@@ -65,8 +64,8 @@ let validPassword = (password) => {
   if (!password) {
     return false;
   } else {
-    const regExp = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
-    return regExp.test();
+    const regExp = new RegExp(/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/);
+    return regExp.test(password);
   }
 }
 const emailValidators = [
@@ -97,7 +96,7 @@ const  passwordValidators = [
   },
   {
     validator: validPassword,
-    message: 'Must be at least one uppecase, lowercase, spesial character, and number'
+    message: 'Password must have at least one uppercase, lowercase, special character, and number'
 
   }
 ];

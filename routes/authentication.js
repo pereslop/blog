@@ -26,6 +26,7 @@ module.exports = (router) => {
                   success: false, message: 'Username already exists'
                 });
               } else {
+                // checking is the validation error
                 if (err.errors) {
                   if (err.errors.email) {
                     res.json({
